@@ -4,3 +4,7 @@
 #include <QApplication>
 #include <opencv2/opencv.hpp>
 #include <QDebug>
+#include <QTableWidgetItem>
+#include <QFileDialog>
+#include <QImage>
+#include <QPixmap>
