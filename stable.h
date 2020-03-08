@@ -8,3 +8,5 @@
 #include <QFileDialog>
 #include <QImage>
 #include <QPixmap>
+#include <QMouseEvent>
+#include <QEvent>

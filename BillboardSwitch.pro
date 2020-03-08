@@ -25,11 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    piclabel.cpp
 
 HEADERS += \
         mainwindow.h \
-    stable.h
+    stable.h \
+    piclabel.h
 
 FORMS += \
         mainwindow.ui

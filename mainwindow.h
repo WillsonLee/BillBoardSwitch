@@ -30,8 +30,13 @@ private:
     Ui::MainWindow *ui;
     cv::Mat img_target,img_board;
     void initTableView();
-    cv::Mat openImage();
+    bool openImage(cv::Mat &dst);
     QImage cvtMat2QImage(cv::Mat src);
+public slots:
+    void changeX(int x);
+    void changeY(int y);
+    void targetImageClicked(bool loaded);
+    void boardImageClicked(bool loaded);
 };
 
 #endif // MAINWINDOW_H
