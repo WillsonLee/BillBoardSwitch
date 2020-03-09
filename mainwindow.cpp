@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->initTableView();
+    this->saveFileName=QDir::currentPath()+"/output.png";
+    ui->lineEdit_output->setText(this->saveFileName);
     connect(ui->label_env,&PicLabel::clicked,this,&MainWindow::targetImageClicked);
     connect(ui->label_board,&PicLabel::clicked,this,&MainWindow::boardImageClicked);
     connect(ui->label_env,&PicLabel::coordXChanged,this,&MainWindow::changeX);
@@ -114,7 +116,12 @@ void MainWindow::changeY(int y)
 void MainWindow::targetImageClicked(bool loaded)
 {
     if(loaded){
-        qDebug()<<"writing coord to table"<<ui->lcdNumber_x->value()<<","<<ui->lcdNumber_y->value()<<endl;
+        int row=ui->tableWidget->currentRow();
+        row=row==-1?ui->tableWidget->rowCount()-1:row;
+        if(row!=-1){
+            ui->tableWidget->setItem(row,0,new QTableWidgetItem(QString::number(ui->lcdNumber_x->value())));
+            ui->tableWidget->setItem(row,1,new QTableWidgetItem(QString::number(ui->lcdNumber_y->value())));
+        }
     }
     else{
         ui->pushButton_target->click();
@@ -124,9 +131,40 @@ void MainWindow::targetImageClicked(bool loaded)
 void MainWindow::boardImageClicked(bool loaded)
 {
     if(loaded){
-        qDebug()<<"writing coord to table"<<ui->lcdNumber_x->value()<<","<<ui->lcdNumber_y->value()<<endl;
+        int row=ui->tableWidget->currentRow();
+        row=row==-1?ui->tableWidget->rowCount()-1:row;
+        if(row!=-1){
+            ui->tableWidget->setItem(row,2,new QTableWidgetItem(QString::number(ui->lcdNumber_x->value())));
+            ui->tableWidget->setItem(row,3,new QTableWidgetItem(QString::number(ui->lcdNumber_y->value())));
+        }
     }
     else{
         ui->pushButton_board->click();
     }
+}
+
+void MainWindow::on_pushButton_select_clicked()
+{
+    QFileInfo info(this->saveFileName);
+    QString fileName=QFileDialog::getSaveFileName(this,this->saveFileName,info.absolutePath(),"image file(*.jpg *.png *.jpeg)");
+    if(!fileName.isEmpty()&&this->saveFileName!=fileName){
+        this->saveFileName=fileName;
+        ui->lineEdit_output->setText(this->saveFileName);
+        ui->pushButton_save->click();
+    }
+}
+
+void MainWindow::on_pushButton_save_clicked()
+{
+    if(!this->saveFileName.isEmpty()&&result.rows!=0&&result.cols!=0){
+        cv::imwrite(this->saveFileName.toStdString(),this->result);
+    }
+}
+
+void MainWindow::on_pushButton_run_clicked()
+{
+    //verify the completeness of point coordinate
+    //calculate homography matrix
+    //clip board from right image
+    //paste board image to target image
 }

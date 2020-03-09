@@ -26,9 +26,17 @@ private slots:
 
     void on_pushButton_clear_clicked();
 
+    void on_pushButton_select_clicked();
+
+    void on_pushButton_save_clicked();
+
+    void on_pushButton_run_clicked();
+
 private:
     Ui::MainWindow *ui;
     cv::Mat img_target,img_board;
+    QString saveFileName;
+    cv::Mat result;
     void initTableView();
     bool openImage(cv::Mat &dst);
     QImage cvtMat2QImage(cv::Mat src);

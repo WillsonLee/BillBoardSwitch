@@ -221,6 +221,20 @@ before carry on:
               </widget>
              </item>
              <item>
+              <widget class="QPushButton" name="pushButton_save">
+               <property name="text">
+                <string>save result</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>output file name:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QFrame" name="frame_7">
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
@@ -245,14 +259,7 @@ before carry on:
                  <number>2</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="label">
-                  <property name="text">
-                   <string>output:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="lineEdit">
+                 <widget class="QLineEdit" name="lineEdit_output">
                   <property name="readOnly">
                    <bool>true</bool>
                   </property>
