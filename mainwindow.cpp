@@ -164,6 +164,10 @@ void MainWindow::on_pushButton_select_clicked()
 void MainWindow::on_pushButton_save_clicked()
 {
     if(!this->saveFileName.isEmpty()&&result.rows!=0&&result.cols!=0){
+        QString sf=QFileInfo(saveFileName).suffix();
+        if(sf!="jpg"&&sf!="jpeg"&&sf!="png"&&sf!="bmp"){
+            saveFileName+=".jpg";
+        }
         cv::imwrite(this->saveFileName.toStdString(),this->result);
     }
 }
