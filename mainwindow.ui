@@ -6,15 +6,30 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>923</width>
-    <height>586</height>
+    <width>1214</width>
+    <height>869</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="7,3">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="8,2">
+    <property name="spacing">
+     <number>2</number>
+    </property>
+    <property name="leftMargin">
+     <number>2</number>
+    </property>
+    <property name="topMargin">
+     <number>2</number>
+    </property>
+    <property name="rightMargin">
+     <number>2</number>
+    </property>
+    <property name="bottomMargin">
+     <number>2</number>
+    </property>
     <item>
      <widget class="QFrame" name="frame">
       <property name="frameShape">
@@ -24,10 +39,40 @@
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>2</number>
+       </property>
+       <property name="leftMargin">
+        <number>2</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>2</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
        <item>
-        <widget class="PicLabel" name="label_env">
-         <property name="text">
-          <string>Be sure to finish reading the following instructions
+        <widget class="QScrollArea" name="scrollArea">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>599</width>
+            <height>609</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="PicLabel" name="label_env">
+             <property name="text">
+              <string>Be sure to finish reading the following instructions
 before carry on:
 1.click open target image to open target image to
     display on left
@@ -42,13 +87,32 @@ before carry on:
     coordinate in right image
 7.click run to substitude the selected area in left
     image with the selected area in right image</string>
-         </property>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
        <item>
-        <widget class="PicLabel" name="label_board">
-         <property name="text">
-          <string>Be sure to finish reading the following instructions
+        <widget class="QScrollArea" name="scrollArea_2">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>599</width>
+            <height>609</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+            <widget class="PicLabel" name="label_board">
+             <property name="text">
+              <string>Be sure to finish reading the following instructions
 before carry on:
 1.click open target image to open target image to
     display on left
@@ -63,7 +127,11 @@ before carry on:
     coordinate in right image
 7.click run to substitude the selected area in left
     image with the selected area in right image</string>
-         </property>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -156,11 +224,19 @@ before carry on:
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_save">
+            <property name="text">
+             <string>save</string>
+            </property>
+           </widget>
+          </item>
          </layout>
          <zorder>frame_5</zorder>
          <zorder>pushButton_board</zorder>
          <zorder>pushButton_target</zorder>
          <zorder>pushButton_run</zorder>
+         <zorder>pushButton_save</zorder>
         </widget>
        </item>
        <item>
@@ -217,13 +293,6 @@ before carry on:
               <widget class="QPushButton" name="pushButton_clear">
                <property name="text">
                 <string>clear</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_save">
-               <property name="text">
-                <string>save result</string>
                </property>
               </widget>
              </item>
@@ -297,7 +366,7 @@ before carry on:
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>923</width>
+     <width>1214</width>
      <height>28</height>
     </rect>
    </property>

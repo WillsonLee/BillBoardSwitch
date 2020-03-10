@@ -11,6 +11,7 @@ void PicLabel::setImage(const QImage &img)
 {
     QPixmap pix=QPixmap::fromImage(img);
     this->setPixmap(pix);
+    this->resize(pix.size());
     this->setText("");
     imageLoaded=true;
 }

@@ -10,3 +10,5 @@
 #include <QPixmap>
 #include <QMouseEvent>
 #include <QEvent>
+#include <vector>
+#include <QMessageBox>

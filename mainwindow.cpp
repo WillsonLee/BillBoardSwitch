@@ -48,12 +48,17 @@ void MainWindow::on_pushButton_board_clicked()
 void MainWindow::on_pushButton_add_clicked()
 {
     ui->tableWidget->insertRow(ui->tableWidget->rowCount());
+    for(int i=0;i<4;++i)ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,i,new QTableWidgetItem(""));
+    ui->tableWidget->setCurrentCell(0,0);
 }
 
 void MainWindow::on_pushButton_del_clicked()
 {
     if(ui->tableWidget->currentRow()!=-1){
         ui->tableWidget->removeRow(ui->tableWidget->currentRow());
+        if(ui->tableWidget->rowCount()>0){
+            ui->tableWidget->setCurrentCell(0,0);
+        }
     }
 }
 
@@ -73,12 +78,12 @@ void MainWindow::initTableView()
     ui->tableWidget->setHorizontalHeaderItem(1,new QTableWidgetItem("y_left"));
     ui->tableWidget->setHorizontalHeaderItem(2,new QTableWidgetItem("x_right"));
     ui->tableWidget->setHorizontalHeaderItem(3,new QTableWidgetItem("y_right"));
-    ui->tableWidget->insertRow(ui->tableWidget->rowCount());
+    this->on_pushButton_add_clicked();
 }
 
 bool MainWindow::openImage(cv::Mat &dst)
 {
-    QString fileName=QFileDialog::getOpenFileName(this,"Load image","/home/lyx","image file(*.jpg *.png)");
+    QString fileName=QFileDialog::getOpenFileName(this,"Load image",QDir::currentPath(),"image file(*.jpg *.jpeg *.png *.bmp)");
     if(!fileName.isEmpty()){
         dst=cv::imread(fileName.toStdString(),cv::IMREAD_UNCHANGED);
         dst.convertTo(dst,CV_8UC(dst.channels()));
@@ -121,6 +126,7 @@ void MainWindow::targetImageClicked(bool loaded)
         if(row!=-1){
             ui->tableWidget->setItem(row,0,new QTableWidgetItem(QString::number(ui->lcdNumber_x->value())));
             ui->tableWidget->setItem(row,1,new QTableWidgetItem(QString::number(ui->lcdNumber_y->value())));
+            ui->tableWidget->setCurrentCell((row+1)%ui->tableWidget->rowCount(),0);
         }
     }
     else{
@@ -136,6 +142,7 @@ void MainWindow::boardImageClicked(bool loaded)
         if(row!=-1){
             ui->tableWidget->setItem(row,2,new QTableWidgetItem(QString::number(ui->lcdNumber_x->value())));
             ui->tableWidget->setItem(row,3,new QTableWidgetItem(QString::number(ui->lcdNumber_y->value())));
+            ui->tableWidget->setCurrentCell((row+1)%ui->tableWidget->rowCount(),2);
         }
     }
     else{
@@ -164,7 +171,43 @@ void MainWindow::on_pushButton_save_clicked()
 void MainWindow::on_pushButton_run_clicked()
 {
     //verify the completeness of point coordinate
+    std::vector<cv::Point2f> leftPts;
+    std::vector<cv::Point2f> rightPts;
+    auto str2num=[](QString str)->float{
+        float res=-1;
+        if(str.isEmpty())return res;
+        try{
+            res=str.toFloat();
+        }catch(...){}
+        return res;
+    };
+    for(int i=0;i<ui->tableWidget->rowCount();++i){
+        float x1=str2num(ui->tableWidget->item(i,0)->text());
+        float y1=str2num(ui->tableWidget->item(i,1)->text());
+        float x2=str2num(ui->tableWidget->item(i,2)->text());
+        float y2=str2num(ui->tableWidget->item(i,3)->text());
+        if(x1>=0&&y1>=0&&x2>=0&&y2>=0){
+            leftPts.push_back(cv::Point2f(x1,y1));
+            rightPts.push_back(cv::Point2f(x2,y2));
+        }
+        else{
+            QMessageBox::warning(this,"parameter error","number of points selected in left image should be equal to right image");
+            return;
+        }
+    }
     //calculate homography matrix
-    //clip board from right image
-    //paste board image to target image
+    cv::Mat H=cv::findHomography(rightPts,leftPts,0);
+    //clip board from right image and transform
+    cv::Mat boardWarped;
+    cv::warpPerspective(img_board,boardWarped,H,img_target.size());
+    //copy board image to target image
+    cv::Mat mask(img_target.rows,img_target.cols,CV_8UC1,cv::Scalar(0));
+    std::vector<std::vector<cv::Point> > polyPts;
+    polyPts.push_back(std::vector<cv::Point>());
+    for(int i=0;i<rightPts.size();++i){
+        polyPts[0].push_back(cv::Point(leftPts[i]));
+    }
+    cv::fillPoly(mask,polyPts,cv::Scalar(255));
+    result=img_target.clone();
+    boardWarped.copyTo(result,mask);
 }
