@@ -8,7 +8,7 @@
    - 使用Qt Creator打开`BillboardSwitch.pro`文件即可编译运行
 2. 程序使用
 
-![](/home/lyx/workspace/Qt/BillboardSwitch/mainwindow.png)
+![](./mainwindow.png)
 
 - 加载目标图片（左图）与替换广告牌图片（右图）
 - 然后鼠标选择对应点（如左边运动员广告牌四个角点对应右边图片的四个角点），鼠标选的点像素坐标会写在中间表格里；鼠标在图片中实时坐标会显示在数码显示板上
@@ -16,10 +16,10 @@
 
 输入图片为：
 
-|                        目标图片                         |                       替换图片                        |
-| :-----------------------------------------------------: | :---------------------------------------------------: |
-| ![](/home/lyx/workspace/Qt/BillboardSwitch/street.jpeg) | ![](/home/lyx/workspace/Qt/BillboardSwitch/Miku.jpeg) |
+|      目标图片      |     替换图片     |
+| :----------------: | :--------------: |
+| ![](./street.jpeg) | ![](./Miku.jpeg) |
 
 将运动员广告牌替换成初音未来，输出结果为：
 
-![](/home/lyx/workspace/Qt/BillboardSwitch/output.png)
+![](./output.png)
